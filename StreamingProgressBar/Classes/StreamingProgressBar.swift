@@ -2,7 +2,10 @@
 //  StreamingProgressBar.swift
 //
 //  Created by Kyle Zaragoza on 9/16/15.
-//  Copyright © 2015 Kyle Zaragoza. All rights reserved.
+//  Portions Copyright © 2015 Kyle Zaragoza. All rights reserved.
+//  Portions from the `ScrubberBar` library, Copyright © 2015 Squareheads. MIT licensed.
+//  Portions from the `JGDetailScrubber` library, Copyright © 2013 Jonas Gessner. All rights reserved.
+//  Portions Copyright © 2019 Perceval Faramaz.
 //
 
 import UIKit
@@ -13,7 +16,7 @@ import UIKit
 
 @IBDesignable open class StreamingProgressBar: UIControl {
     
-    @IBOutlet public weak var delegate: StreamingProgressBar?
+    @IBOutlet public weak var delegate: StreamingProgressBarDelegate?
     
     @IBInspectable open var progressBarColor: UIColor = UIColor.white {
         didSet {
@@ -61,6 +64,12 @@ import UIKit
     }
     
     @IBInspectable open var scrubbingEnabled: Bool = true
+    @IBInspectable open var detailScrubbingEnabled: Bool = true
+    open var scrubbingSpeeds: [CGFloat: CGFloat] = [0  :   1,
+                                                    50 : 0.5,
+                                                    100:0.25,
+                                                    150: 0.1]
+    
     fileprivate var isDragging: Bool = false
     
     fileprivate let progressBarLayer: CALayer = {
@@ -121,7 +130,6 @@ import UIKit
         self.clipsToBounds = false
         self.layer.masksToBounds = false
         layoutProgressBars()
-        addTouchHandlers()
     }
     
     override init(frame: CGRect) {
@@ -149,12 +157,6 @@ import UIKit
     
     // MARK: - Interaction
     
-    fileprivate func addTouchHandlers() {
-        addTarget(self, action: .touchStarted, for: .touchDown)
-        addTarget(self, action: .touchEnded, for: .touchUpInside)
-        addTarget(self, action: .touchMoved, for: .touchDragInside)
-    }
-    
     func positionFromProgress(progress: CGFloat) -> CGFloat {
         return (CGFloat(bounds.width) * progress) - self.bounds.width
     }
@@ -163,8 +165,8 @@ import UIKit
         return (position / CGFloat(bounds.width)).clamped(to: 0...1)
     }
     
-    func eventIsInDragger(object: AnyObject, event: UIEvent) -> Bool {
-        if let touch = event.touches(for: self)?.first, scrubbingEnabled == true {
+    func touchIsInDragger(object: AnyObject, touch: UITouch) -> Bool {
+        if scrubbingEnabled == true {
             let pointInView = touch.location(in: self)
             
             let draggerRect = draggerLayer.frame
@@ -187,33 +189,28 @@ import UIKit
         return false
     }
     
-    @objc func touchStarted(object: AnyObject, event: UIEvent) {
-        if eventIsInDragger(object: object, event: event) {
+    open override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        if touchIsInDragger(object: self, touch: touch) {
             isDragging = true
         }
+        return true
     }
     
-    @objc func touchEnded(object: AnyObject, event: UIEvent) {
-        if eventIsInDragger(object: object, event: event) {
-            isDragging = false
-        }
-    }
-    
-    @objc func touchMoved(object: AnyObject, event: UIEvent) {
-        if let touch = event.touches(for: self)?.first, scrubbingEnabled == true, isDragging == true {
+    open override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        if scrubbingEnabled == true, isDragging == true {
             let pointInView = touch.location(in: self)
             
             let progress = progressFromPosition(position: pointInView.x)
             self.progress = progress
-            delegate?.scrubberBar?(bar: self, didScrubToProgress: self.progress)
+            delegate?.streamingBar?(bar: self, didScrubToProgress: self.progress)
+            return true
         }
+        return false
     }
-}
-
-private extension Selector {
-    static let touchStarted = #selector(StreamingProgressBar.touchStarted(object:event:))
-    static let touchEnded = #selector(StreamingProgressBar.touchEnded(object:event:))
-    static let touchMoved = #selector(StreamingProgressBar.touchMoved(object:event:))
+    
+    open override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
+        isDragging = false
+    }
 }
 
 extension Comparable {

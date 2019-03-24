@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        return
+        /*
         playTimer = Timer.scheduledTimer(
             timeInterval: 1/30,
             target: self,
@@ -28,7 +30,7 @@ class ViewController: UIViewController {
             target: self,
             selector: #selector(incrementBufferProgress),
             userInfo: nil,
-            repeats: true)
+            repeats: true)*/
     }
     
     func incrementPlayTimer() {
