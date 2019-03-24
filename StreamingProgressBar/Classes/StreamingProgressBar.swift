@@ -64,13 +64,23 @@ import UIKit
     }
     
     @IBInspectable open var scrubbingEnabled: Bool = true
-    @IBInspectable open var detailScrubbingEnabled: Bool = true
+    @IBInspectable open var detailScrubbingEnabled: Bool = false
+    open var scrubbingSpeed: CGFloat = 1
+    
     open var scrubbingSpeeds: [CGFloat: CGFloat] = [0  :   1,
                                                     50 : 0.5,
                                                     100:0.25,
-                                                    150: 0.1]
+                                                    150: 0.1] {
+        didSet {
+            scrubbingPositions = scrubbingSpeeds.keys.sorted(by: { $0 > $1 })
+        }
+    }
+    fileprivate var scrubbingPositions = [CGFloat]()
+    fileprivate var thumbRect = CGRect.zero
     
     fileprivate var isDragging: Bool = false
+    fileprivate var firstTouchX: CGFloat = 0
+    fileprivate var firstTouchProgress: CGFloat = 0
     
     fileprivate let progressBarLayer: CALayer = {
         let layer = CALayer()
@@ -130,6 +140,9 @@ import UIKit
         self.clipsToBounds = false
         self.layer.masksToBounds = false
         layoutProgressBars()
+        
+        let speeds = self.scrubbingSpeeds
+        self.scrubbingSpeeds = speeds //to trigger didSet and rebuild positions array
     }
     
     override init(frame: CGRect) {
@@ -165,7 +178,7 @@ import UIKit
         return (position / CGFloat(bounds.width)).clamped(to: 0...1)
     }
     
-    func touchIsInDragger(object: AnyObject, touch: UITouch) -> Bool {
+    func touchIsInDragger(object: AnyObject, touch: UITouch, xPosition: inout CGFloat) -> Bool {
         if scrubbingEnabled == true {
             let pointInView = touch.location(in: self)
             
@@ -176,6 +189,7 @@ import UIKit
                                             y: draggerRect.minY - (allowedRectSize.height - draggerRect.height)/2)
             let allowedRect = CGRect(origin: allowedRectOrigin,
                                      size: allowedRectSize)
+            thumbRect = allowedRect
             
             /*let path = UIBezierPath(ovalIn: allowedRect)
              let isInDragger = path.contains(pointInView)*/
@@ -183,6 +197,7 @@ import UIKit
             let isInDragger = allowedRect.contains(pointInView)
             
             if isInDragger {
+                xPosition = pointInView.x
                 return true
             }
         }
@@ -190,26 +205,52 @@ import UIKit
     }
     
     open override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        if touchIsInDragger(object: self, touch: touch) {
+        var xPos : CGFloat = 0
+        if touchIsInDragger(object: self, touch: touch, xPosition: &xPos) {
             isDragging = true
+            firstTouchX = xPos
+            firstTouchProgress = progress
+            return true
         }
-        return true
+        return super.beginTracking(touch, with: event)
+    }
+    
+    fileprivate func scrubbingSpeedAtDelta(_ verticalDelta: CGFloat) -> CGFloat {
+        if (verticalDelta >= 0) {
+            for position in scrubbingPositions {
+                if verticalDelta >= position {
+                    return scrubbingSpeeds[position]!
+                }
+            }
+        }
+        return 1
     }
     
     open override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         if scrubbingEnabled == true, isDragging == true {
             let pointInView = touch.location(in: self)
             
-            let progress = progressFromPosition(position: pointInView.x)
-            self.progress = progress
+            let oldSpeed = scrubbingSpeed
+            let verticalDelta = abs(abs(pointInView.y) - bounds.midY)
+            scrubbingSpeed = scrubbingSpeedAtDelta(verticalDelta)
+            if abs(oldSpeed - scrubbingSpeed) > 0.001 {
+                firstTouchProgress = self.progress
+                firstTouchX = pointInView.x
+            }
+            
+            let relativeProgress = (pointInView.x - firstTouchX) / (bounds.width - thumbRect.width)
+            
+            self.progress = firstTouchProgress + relativeProgress * scrubbingSpeed
             delegate?.streamingBar?(bar: self, didScrubToProgress: self.progress)
+            
             return true
         }
-        return false
+        return super.continueTracking(touch, with: event)
     }
     
     open override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
         isDragging = false
+        super.endTracking(touch, with: event)
     }
 }
 
