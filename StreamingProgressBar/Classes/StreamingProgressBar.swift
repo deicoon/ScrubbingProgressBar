@@ -12,6 +12,7 @@ import UIKit
     @IBInspectable open var progressBarColor: UIColor = UIColor.white {
         didSet {
             progressBarLayer.backgroundColor = progressBarColor.cgColor
+            draggerLayer.fillColor = progressBarColor.cgColor
         }
     }
     
@@ -43,8 +44,22 @@ import UIKit
         }
     }
     
+    @IBInspectable open var draggerRadius: CGFloat = 10 {
+        didSet {
+            let path = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: draggerRadius, height: draggerRadius))
+            draggerLayer.path = path.cgPath
+            layoutDragger()
+        }
+    }
+    
     fileprivate let progressBarLayer: CALayer = {
         let layer = CALayer()
+        return layer
+    }()
+    
+    fileprivate let draggerLayer: CAShapeLayer = {
+        let layer = CAShapeLayer()
+        layer.backgroundColor = UIColor.clear.cgColor
         return layer
     }()
     
@@ -61,14 +76,28 @@ import UIKit
             origin: CGPoint.zero,
             size: CGSize(width: self.bounds.width * progress, height: self.bounds.height))
         layer.frame = layerFrame
+        
+        if (layer == progressBarLayer) {
+            layoutDragger()
+        }
     }
     
+    fileprivate func layoutDragger() {
+        let layerFrame = CGRect(
+            origin: CGPoint(x: (self.bounds.width * progress - draggerRadius/2),
+                            y: (self.bounds.height - draggerRadius)/2),
+            size: CGSize(width: draggerRadius, height: draggerRadius))
+        draggerLayer.frame = layerFrame
+    }
     
     // MARK: - Init
     
     private func commonInit() {
         self.layer.addSublayer(secondaryProgressBarLayer)
         self.layer.addSublayer(progressBarLayer)
+        self.layer.addSublayer(draggerLayer)
+        self.clipsToBounds = false
+        self.layer.masksToBounds = false
         layoutProgressBars()
     }
     
