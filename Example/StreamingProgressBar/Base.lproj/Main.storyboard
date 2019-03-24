@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,10 +21,10 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Ki-cy-1pe" customClass="StreamingProgressBar" customModule="StreamingProgressBar">
-                                <rect key="frame" x="20" y="318.5" width="335" height="30"/>
+                                <rect key="frame" x="20" y="330.5" width="335" height="6"/>
                                 <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="9Yc-p3-oCO"/>
+                                    <constraint firstAttribute="height" constant="6" id="9Yc-p3-oCO"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="progressBarColor">
@@ -44,7 +43,7 @@
                                         <real key="value" value="1.5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="draggerRadius">
-                                        <real key="value" value="10"/>
+                                        <real key="value" value="12"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>

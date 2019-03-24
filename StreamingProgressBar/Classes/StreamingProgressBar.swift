@@ -178,23 +178,29 @@ import UIKit
         return (position / CGFloat(bounds.width)).clamped(to: 0...1)
     }
     
+    func pointIsInDragger(_ pointInView: CGPoint) -> Bool {
+        let draggerRect = draggerLayer.frame
+        let draggerThumbDiameter = max(draggerRect.width, 20)
+        let allowedRectSize = CGSize(width: draggerThumbDiameter,
+                                     height: draggerThumbDiameter)
+        let allowedRectOrigin = CGPoint(x: draggerRect.minX - (allowedRectSize.width - draggerRect.width)/2,
+                                        y: draggerRect.minY - (allowedRectSize.height - draggerRect.height)/2)
+        let allowedRect = CGRect(origin: allowedRectOrigin,
+                                 size: allowedRectSize)
+        thumbRect = allowedRect
+        
+        /*let path = UIBezierPath(ovalIn: allowedRect)
+         let isInDragger = path.contains(pointInView)*/
+        
+        let isInDragger = allowedRect.contains(pointInView)
+        return isInDragger
+    }
+    
     func touchIsInDragger(object: AnyObject, touch: UITouch, xPosition: inout CGFloat) -> Bool {
         if scrubbingEnabled == true {
             let pointInView = touch.location(in: self)
             
-            let draggerRect = draggerLayer.frame
-            let allowedRectSize = CGSize(width: draggerRect.width + 25,
-                                         height: max(self.frame.height, draggerRect.height) + 20)
-            let allowedRectOrigin = CGPoint(x: draggerRect.minX - (allowedRectSize.width - draggerRect.width)/2,
-                                            y: draggerRect.minY - (allowedRectSize.height - draggerRect.height)/2)
-            let allowedRect = CGRect(origin: allowedRectOrigin,
-                                     size: allowedRectSize)
-            thumbRect = allowedRect
-            
-            /*let path = UIBezierPath(ovalIn: allowedRect)
-             let isInDragger = path.contains(pointInView)*/
-            
-            let isInDragger = allowedRect.contains(pointInView)
+            let isInDragger = pointIsInDragger(pointInView)
             
             if isInDragger {
                 xPosition = pointInView.x
@@ -202,6 +208,10 @@ import UIKit
             }
         }
         return false
+    }
+    
+    open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        return pointIsInDragger(point)
     }
     
     open override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
