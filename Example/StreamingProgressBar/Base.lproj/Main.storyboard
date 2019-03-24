@@ -22,10 +22,10 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Ki-cy-1pe" customClass="StreamingProgressBar" customModule="StreamingProgressBar">
-                                <rect key="frame" x="20" y="331" width="335" height="5"/>
+                                <rect key="frame" x="20" y="318.5" width="335" height="30"/>
                                 <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="5" id="9Yc-p3-oCO"/>
+                                    <constraint firstAttribute="height" constant="30" id="9Yc-p3-oCO"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="progressBarColor">

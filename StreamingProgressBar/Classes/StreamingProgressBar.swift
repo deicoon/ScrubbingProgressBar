@@ -7,7 +7,13 @@
 
 import UIKit
 
-@IBDesignable open class StreamingProgressBar: UIView {
+@objc public protocol StreamingProgressBarDelegate {
+    @objc optional func streamingBar(bar: StreamingProgressBar, didScrubToProgress: CGFloat)
+}
+
+@IBDesignable open class StreamingProgressBar: UIControl {
+    
+    @IBOutlet public weak var delegate: StreamingProgressBar?
     
     @IBInspectable open var progressBarColor: UIColor = UIColor.white {
         didSet {
@@ -34,13 +40,15 @@ import UIKit
     }
 
     @IBInspectable open var progress: CGFloat = 0.5 {
+        willSet {
+            CATransaction.begin()
+            CATransaction.setAnimationDuration(0.4)
+            CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: .easeInEaseOut))
+        }
         didSet {
-            if progress > 1 {
-                progress = 1
-            } else if progress < 0 {
-                progress = 0
-            }
+            progress = progress.clamped(to: 0...1)
             layout(progressBarLayer, forProgress: progress)
+            CATransaction.commit()
         }
     }
     
@@ -51,6 +59,9 @@ import UIKit
             layoutDragger()
         }
     }
+    
+    @IBInspectable open var scrubbingEnabled: Bool = true
+    fileprivate var isDragging: Bool = false
     
     fileprivate let progressBarLayer: CALayer = {
         let layer = CALayer()
@@ -71,11 +82,21 @@ import UIKit
     
     // MARK: - Layout
     
+    private func animateLayer(_ layer: CALayer, toFrame frame: CGRect) {
+        let animation = CABasicAnimation(keyPath: "frame")
+        animation.fromValue = layer.frame
+        animation.toValue = frame
+        layer.frame = frame
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        layer.add(animation, forKey: "frame")
+    }
+    
     fileprivate func layout(_ layer: CALayer, forProgress progress: CGFloat) {
         let layerFrame = CGRect(
             origin: CGPoint.zero,
             size: CGSize(width: self.bounds.width * progress, height: self.bounds.height))
-        layer.frame = layerFrame
+        
+        animateLayer(layer, toFrame: layerFrame)
         
         if (layer == progressBarLayer) {
             layoutDragger()
@@ -87,7 +108,8 @@ import UIKit
             origin: CGPoint(x: (self.bounds.width * progress - draggerRadius/2),
                             y: (self.bounds.height - draggerRadius)/2),
             size: CGSize(width: draggerRadius, height: draggerRadius))
-        draggerLayer.frame = layerFrame
+        
+        animateLayer(draggerLayer, toFrame: layerFrame)
     }
     
     // MARK: - Init
@@ -99,6 +121,7 @@ import UIKit
         self.clipsToBounds = false
         self.layer.masksToBounds = false
         layoutProgressBars()
+        addTouchHandlers()
     }
     
     override init(frame: CGRect) {
@@ -122,5 +145,79 @@ import UIKit
     open override func layoutSubviews() {
         super.layoutSubviews()
         layoutProgressBars()
+    }
+    
+    // MARK: - Interaction
+    
+    fileprivate func addTouchHandlers() {
+        addTarget(self, action: .touchStarted, for: .touchDown)
+        addTarget(self, action: .touchEnded, for: .touchUpInside)
+        addTarget(self, action: .touchMoved, for: .touchDragInside)
+    }
+    
+    func positionFromProgress(progress: CGFloat) -> CGFloat {
+        return (CGFloat(bounds.width) * progress) - self.bounds.width
+    }
+    
+    func progressFromPosition(position: CGFloat) -> CGFloat {
+        return (position / CGFloat(bounds.width)).clamped(to: 0...1)
+    }
+    
+    func eventIsInDragger(object: AnyObject, event: UIEvent) -> Bool {
+        if let touch = event.touches(for: self)?.first, scrubbingEnabled == true {
+            let pointInView = touch.location(in: self)
+            
+            let draggerRect = draggerLayer.frame
+            let allowedRectSize = CGSize(width: draggerRect.width + 25,
+                                         height: max(self.frame.height, draggerRect.height) + 20)
+            let allowedRectOrigin = CGPoint(x: draggerRect.minX - (allowedRectSize.width - draggerRect.width)/2,
+                                            y: draggerRect.minY - (allowedRectSize.height - draggerRect.height)/2)
+            let allowedRect = CGRect(origin: allowedRectOrigin,
+                                     size: allowedRectSize)
+            
+            /*let path = UIBezierPath(ovalIn: allowedRect)
+             let isInDragger = path.contains(pointInView)*/
+            
+            let isInDragger = allowedRect.contains(pointInView)
+            
+            if isInDragger {
+                return true
+            }
+        }
+        return false
+    }
+    
+    @objc func touchStarted(object: AnyObject, event: UIEvent) {
+        if eventIsInDragger(object: object, event: event) {
+            isDragging = true
+        }
+    }
+    
+    @objc func touchEnded(object: AnyObject, event: UIEvent) {
+        if eventIsInDragger(object: object, event: event) {
+            isDragging = false
+        }
+    }
+    
+    @objc func touchMoved(object: AnyObject, event: UIEvent) {
+        if let touch = event.touches(for: self)?.first, scrubbingEnabled == true, isDragging == true {
+            let pointInView = touch.location(in: self)
+            
+            let progress = progressFromPosition(position: pointInView.x)
+            self.progress = progress
+            delegate?.scrubberBar?(bar: self, didScrubToProgress: self.progress)
+        }
+    }
+}
+
+private extension Selector {
+    static let touchStarted = #selector(StreamingProgressBar.touchStarted(object:event:))
+    static let touchEnded = #selector(StreamingProgressBar.touchEnded(object:event:))
+    static let touchMoved = #selector(StreamingProgressBar.touchMoved(object:event:))
+}
+
+extension Comparable {
+    func clamped(to limits: ClosedRange<Self>) -> Self {
+        return min(max(self, limits.lowerBound), limits.upperBound)
     }
 }
