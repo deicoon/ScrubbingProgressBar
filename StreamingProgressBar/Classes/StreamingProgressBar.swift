@@ -79,7 +79,8 @@ import UIKit
     fileprivate var thumbRect = CGRect.zero
     
     fileprivate var isDragging: Bool = false
-    fileprivate var firstTouchX: CGFloat = 0
+    fileprivate var firstTouchPoint: CGPoint = .zero
+    fileprivate var previousY: CGFloat = 0
     fileprivate var firstTouchProgress: CGFloat = 0
     
     fileprivate let progressBarLayer: CALayer = {
@@ -196,14 +197,14 @@ import UIKit
         return isInDragger
     }
     
-    func touchIsInDragger(object: AnyObject, touch: UITouch, xPosition: inout CGFloat) -> Bool {
+    func touchIsInDragger(object: AnyObject, touch: UITouch, touchPoint: inout CGPoint) -> Bool {
         if scrubbingEnabled == true {
             let pointInView = touch.location(in: self)
             
             let isInDragger = pointIsInDragger(pointInView)
             
             if isInDragger {
-                xPosition = pointInView.x
+                touchPoint = pointInView
                 return true
             }
         }
@@ -215,10 +216,10 @@ import UIKit
     }
     
     open override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        var xPos : CGFloat = 0
-        if touchIsInDragger(object: self, touch: touch, xPosition: &xPos) {
+        var posPt : CGPoint = .zero
+        if touchIsInDragger(object: self, touch: touch, touchPoint: &posPt) {
             isDragging = true
-            firstTouchX = xPos
+            firstTouchPoint = posPt
             firstTouchProgress = progress
             return true
         }
@@ -243,14 +244,31 @@ import UIKit
             let oldSpeed = scrubbingSpeed
             let verticalDelta = abs(abs(pointInView.y) - bounds.midY)
             scrubbingSpeed = scrubbingSpeedAtDelta(verticalDelta)
-            if abs(oldSpeed - scrubbingSpeed) > 0.001 {
-                firstTouchProgress = self.progress
-                firstTouchX = pointInView.x
+            
+            var computedProgress = firstTouchProgress
+            let firstSpeedChangeLocation = scrubbingPositions[scrubbingPositions.count - 2]
+            
+            if (verticalDelta >= firstSpeedChangeLocation && abs(pointInView.y) < abs(previousY)) {
+                let horizDelta = pointInView.x - positionFromProgress(progress: self.progress)
+                let xCompensation = (previousY - pointInView.y) * horizDelta / (verticalDelta)
+                let thumbAdjustment = (progressFromPosition(position: pointInView.x) - self.progress) / (1 + abs(pointInView.y - firstTouchPoint.y))
+                
+                let adjustment = pow((firstSpeedChangeLocation / (verticalDelta)), 2.0)
+                let _verticalChangeAdjustment = (progressFromPosition(position: pointInView.x) - computedProgress) * adjustment
+                
+                computedProgress += _verticalChangeAdjustment
+            } else {
+                if abs(oldSpeed - scrubbingSpeed) > 0.001 {
+                    firstTouchProgress = self.progress
+                    firstTouchPoint = pointInView
+                }
+                
+                let relativeProgress = (pointInView.x - firstTouchPoint.x) / (bounds.width - thumbRect.width)
+                computedProgress += relativeProgress * scrubbingSpeed
             }
+            previousY = pointInView.y
             
-            let relativeProgress = (pointInView.x - firstTouchX) / (bounds.width - thumbRect.width)
-            
-            self.progress = firstTouchProgress + relativeProgress * scrubbingSpeed
+            self.progress = computedProgress
             delegate?.streamingBar?(bar: self, didScrubToProgress: self.progress)
             
             return true
