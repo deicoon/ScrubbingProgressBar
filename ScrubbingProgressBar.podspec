@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ScrubbingProgressBar'
-  s.version          = '1.0.0'
+  s.version          = '1.0.3'
   s.summary          = 'A progress bar w/ a secondary bar, can be used for showing both play and buffer progress in the same view.'
 
 # This description is used to generate tags and improve search results.
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-A progress bar w/ a secondary bar, can be used for showing both play and buffer progress in the same view. The view is fully customizable w/in Interface Builder.
+A slidable progress bar w/ a secondary bar, can be used for showing both play and buffer progress in the same view. The scrubbing speed is variable depending on how far the user is dragging - like the iOS Music app. The view is fully customizable w/in Interface Builder.
                        DESC
 
   s.homepage         = 'https://github.com/deicoon/ScrubbingProgressBar'
