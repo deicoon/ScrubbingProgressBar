@@ -1,5 +1,5 @@
 #
-# Be sure to run `pod lib lint StreamingProgressBar.podspec' to ensure this is a
+# Be sure to run `pod lib lint ScrubbingProgressBar.podspec' to ensure this is a
 # valid spec before submitting.
 #
 # Any lines starting with a # are optional, but their use is encouraged
@@ -7,8 +7,8 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'StreamingProgressBar'
-  s.version          = '1.0.2'
+  s.name             = 'ScrubbingProgressBar'
+  s.version          = '1.0.0'
   s.summary          = 'A progress bar w/ a secondary bar, can be used for showing both play and buffer progress in the same view.'
 
 # This description is used to generate tags and improve search results.
@@ -21,14 +21,13 @@ Pod::Spec.new do |s|
 A progress bar w/ a secondary bar, can be used for showing both play and buffer progress in the same view. The view is fully customizable w/in Interface Builder.
                        DESC
 
-  s.homepage         = 'https://github.com/popwarsweet/StreamingProgressBar'
+  s.homepage         = 'https://github.com/deicoon/ScrubbingProgressBar'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Kyle Zaragoza' => 'popwarsweet@gmail.com' }
-  s.source           = { :git => 'https://github.com/popwarsweet/StreamingProgressBar.git', :tag => s.version.to_s }
-  s.social_media_url = 'https://twitter.com/KyleZaragoza'
+  s.author           = { 'Perceval Faramaz' => 'perceval@faramaz.com' }
+  s.source           = { :git => 'https://github.com/deicoon/ScrubbingProgressBar.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '12.0'
 
-  s.source_files = 'StreamingProgressBar/Classes/**/*'
+  s.source_files = 'ScrubbingProgressBar/Classes/**/*'
 end

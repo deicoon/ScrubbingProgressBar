@@ -1,17 +1,17 @@
 //
 //  ViewController.swift
-//  StreamingProgressBar
+//  ScrubbingProgressBar
 //
 //  Created by Kyle Zaragoza on 08/23/2016.
 //  Copyright (c) 2016 Kyle Zaragoza. All rights reserved.
 //
 
 import UIKit
-import StreamingProgressBar
+import ScrubbingProgressBar
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var progressBar: StreamingProgressBar!
+    @IBOutlet weak var progressBar: ScrubbingProgressBar!
     @IBOutlet weak var resetButton: UIButton!
     var playTimer: Timer?
     var bufferTimer: Timer?

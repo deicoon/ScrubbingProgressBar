@@ -1,5 +1,5 @@
 //
-//  StreamingProgressBar.swift
+//  ScrubbingProgressBar.swift
 //
 //  Created by Kyle Zaragoza on 9/16/15.
 //  Portions Copyright © 2015 Kyle Zaragoza. All rights reserved.
@@ -11,17 +11,17 @@
 
 import UIKit
 
-@objc public protocol StreamingProgressBarDelegate {
-    @objc optional func streamingBar(_ bar: StreamingProgressBar, didScrubToProgress: CGFloat)
-    @objc optional func streamingBar(_ bar: StreamingProgressBar, didChangeScrubbingSpeed: CGFloat)
+@objc public protocol ScrubbingProgressBarDelegate {
+    @objc optional func streamingBar(_ bar: ScrubbingProgressBar, didScrubToProgress: CGFloat)
+    @objc optional func streamingBar(_ bar: ScrubbingProgressBar, didChangeScrubbingSpeed: CGFloat)
     
-    @objc optional func streamingBarDidBeginScrubbing(_ bar: StreamingProgressBar)
-    @objc optional func streamingBarDidEndScrubbing(_ bar: StreamingProgressBar)
+    @objc optional func streamingBarDidBeginScrubbing(_ bar: ScrubbingProgressBar)
+    @objc optional func streamingBarDidEndScrubbing(_ bar: ScrubbingProgressBar)
 }
 
-@IBDesignable open class StreamingProgressBar: UIControl {
+@IBDesignable open class ScrubbingProgressBar: UIControl {
     
-    @IBOutlet public weak var delegate: StreamingProgressBarDelegate?
+    @IBOutlet public weak var delegate: ScrubbingProgressBarDelegate?
     
     @IBInspectable open var progressBarColor: UIColor = UIColor.white {
         didSet {

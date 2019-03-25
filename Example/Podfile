@@ -1,5 +1,5 @@
 use_frameworks!
 
-target 'StreamingProgressBar_Example' do
-  pod 'StreamingProgressBar', :path => '../'
+target 'ScrubbingProgressBar_Example' do
+  pod 'ScrubbingProgressBar', :path => '../'
 end

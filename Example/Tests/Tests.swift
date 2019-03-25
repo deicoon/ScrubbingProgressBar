@@ -1,6 +1,6 @@
 import UIKit
 import XCTest
-import StreamingProgressBar
+import ScrubbingProgressBar
 
 class Tests: XCTestCase {
     

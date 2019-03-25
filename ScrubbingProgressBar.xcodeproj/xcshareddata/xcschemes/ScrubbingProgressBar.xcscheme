@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "272A3B3B1D9ACE76004A67CA"
-               BuildableName = "StreamingProgressBar.framework"
-               BlueprintName = "StreamingProgressBar"
-               ReferencedContainer = "container:StreamingProgressBar.xcodeproj">
+               BuildableName = "ScrubbingProgressBar.framework"
+               BlueprintName = "ScrubbingProgressBar"
+               ReferencedContainer = "container:ScrubbingProgressBar.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "272A3B3B1D9ACE76004A67CA"
-            BuildableName = "StreamingProgressBar.framework"
-            BlueprintName = "StreamingProgressBar"
-            ReferencedContainer = "container:StreamingProgressBar.xcodeproj">
+            BuildableName = "ScrubbingProgressBar.framework"
+            BlueprintName = "ScrubbingProgressBar"
+            ReferencedContainer = "container:ScrubbingProgressBar.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -64,9 +64,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "272A3B3B1D9ACE76004A67CA"
-            BuildableName = "StreamingProgressBar.framework"
-            BlueprintName = "StreamingProgressBar"
-            ReferencedContainer = "container:StreamingProgressBar.xcodeproj">
+            BuildableName = "ScrubbingProgressBar.framework"
+            BlueprintName = "ScrubbingProgressBar"
+            ReferencedContainer = "container:ScrubbingProgressBar.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

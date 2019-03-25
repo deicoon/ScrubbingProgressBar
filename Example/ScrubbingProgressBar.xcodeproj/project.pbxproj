@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3471F2291A51A6912F7AC8F6 /* Pods_StreamingProgressBar_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D85C9D62E7C513833F63479 /* Pods_StreamingProgressBar_Example.framework */; };
+		3471F2291A51A6912F7AC8F6 /* Pods_ScrubbingProgressBar_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D85C9D62E7C513833F63479 /* Pods_ScrubbingProgressBar_Example.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -16,11 +16,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		032B6C2810EE817F4B985F4C /* Pods-StreamingProgressBar_Example-StreamingProgressBar_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreamingProgressBar_Example-StreamingProgressBar_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StreamingProgressBar_Example-StreamingProgressBar_Tests/Pods-StreamingProgressBar_Example-StreamingProgressBar_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		3DD59A69363CC7AA29FF178E /* Pods_StreamingProgressBar_Example_StreamingProgressBar_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StreamingProgressBar_Example_StreamingProgressBar_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A4EE08D4920CDFC26569336 /* Pods-StreamingProgressBar_Example-StreamingProgressBar_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreamingProgressBar_Example-StreamingProgressBar_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StreamingProgressBar_Example-StreamingProgressBar_Tests/Pods-StreamingProgressBar_Example-StreamingProgressBar_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		5FF815E81F26C6FF6DFA5C47 /* Pods_StreamingProgressBar_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StreamingProgressBar_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		607FACD01AFB9204008FA782 /* StreamingProgressBar_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreamingProgressBar_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		032B6C2810EE817F4B985F4C /* Pods-ScrubbingProgressBar_Example-ScrubbingProgressBar_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScrubbingProgressBar_Example-ScrubbingProgressBar_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ScrubbingProgressBar_Example-ScrubbingProgressBar_Tests/Pods-ScrubbingProgressBar_Example-ScrubbingProgressBar_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		3DD59A69363CC7AA29FF178E /* Pods_ScrubbingProgressBar_Example_ScrubbingProgressBar_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScrubbingProgressBar_Example_ScrubbingProgressBar_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A4EE08D4920CDFC26569336 /* Pods-ScrubbingProgressBar_Example-ScrubbingProgressBar_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScrubbingProgressBar_Example-ScrubbingProgressBar_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ScrubbingProgressBar_Example-ScrubbingProgressBar_Tests/Pods-ScrubbingProgressBar_Example-ScrubbingProgressBar_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		5FF815E81F26C6FF6DFA5C47 /* Pods_ScrubbingProgressBar_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScrubbingProgressBar_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACD01AFB9204008FA782 /* ScrubbingProgressBar_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrubbingProgressBar_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -29,14 +29,14 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		8D08FF2B3459A248219F239C /* Pods-StreamingProgressBar_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreamingProgressBar_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StreamingProgressBar_Tests/Pods-StreamingProgressBar_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		8D85C9D62E7C513833F63479 /* Pods_StreamingProgressBar_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StreamingProgressBar_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D08FF2B3459A248219F239C /* Pods-ScrubbingProgressBar_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScrubbingProgressBar_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ScrubbingProgressBar_Tests/Pods-ScrubbingProgressBar_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		8D85C9D62E7C513833F63479 /* Pods_ScrubbingProgressBar_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScrubbingProgressBar_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DCC89EBFE9BB942638FE10C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		9F331C8E75C5EFB57CB23DE4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		A2DB65521A8AEB728B29506D /* Pods-StreamingProgressBar_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreamingProgressBar_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StreamingProgressBar_Tests/Pods-StreamingProgressBar_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		C3A7BC3DF1308304CC86A905 /* Pods-StreamingProgressBar_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreamingProgressBar_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StreamingProgressBar_Example/Pods-StreamingProgressBar_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		DE8C731D8C69B7E02F6D8422 /* Pods-StreamingProgressBar_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreamingProgressBar_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-StreamingProgressBar_Example/Pods-StreamingProgressBar_Example.release.xcconfig"; sourceTree = "<group>"; };
-		E53202F0F33A60C782A9CBAE /* StreamingProgressBar.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = StreamingProgressBar.podspec; path = ../StreamingProgressBar.podspec; sourceTree = "<group>"; };
+		A2DB65521A8AEB728B29506D /* Pods-ScrubbingProgressBar_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScrubbingProgressBar_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ScrubbingProgressBar_Tests/Pods-ScrubbingProgressBar_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		C3A7BC3DF1308304CC86A905 /* Pods-ScrubbingProgressBar_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScrubbingProgressBar_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ScrubbingProgressBar_Example/Pods-ScrubbingProgressBar_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		DE8C731D8C69B7E02F6D8422 /* Pods-ScrubbingProgressBar_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScrubbingProgressBar_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-ScrubbingProgressBar_Example/Pods-ScrubbingProgressBar_Example.release.xcconfig"; sourceTree = "<group>"; };
+		E53202F0F33A60C782A9CBAE /* ScrubbingProgressBar.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ScrubbingProgressBar.podspec; path = ../ScrubbingProgressBar.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3471F2291A51A6912F7AC8F6 /* Pods_StreamingProgressBar_Example.framework in Frameworks */,
+				3471F2291A51A6912F7AC8F6 /* Pods_ScrubbingProgressBar_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,9 +54,9 @@
 		0687243FFC180E904DD351CF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8D85C9D62E7C513833F63479 /* Pods_StreamingProgressBar_Example.framework */,
-				5FF815E81F26C6FF6DFA5C47 /* Pods_StreamingProgressBar_Tests.framework */,
-				3DD59A69363CC7AA29FF178E /* Pods_StreamingProgressBar_Example_StreamingProgressBar_Tests.framework */,
+				8D85C9D62E7C513833F63479 /* Pods_ScrubbingProgressBar_Example.framework */,
+				5FF815E81F26C6FF6DFA5C47 /* Pods_ScrubbingProgressBar_Tests.framework */,
+				3DD59A69363CC7AA29FF178E /* Pods_ScrubbingProgressBar_Example_ScrubbingProgressBar_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -65,7 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
-				607FACD21AFB9204008FA782 /* Example for StreamingProgressBar */,
+				607FACD21AFB9204008FA782 /* Example for ScrubbingProgressBar */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				8363C6934A65B434ADD37632 /* Pods */,
@@ -76,12 +76,12 @@
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD01AFB9204008FA782 /* StreamingProgressBar_Example.app */,
+				607FACD01AFB9204008FA782 /* ScrubbingProgressBar_Example.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		607FACD21AFB9204008FA782 /* Example for StreamingProgressBar */ = {
+		607FACD21AFB9204008FA782 /* Example for ScrubbingProgressBar */ = {
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
@@ -91,8 +91,8 @@
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
-			name = "Example for StreamingProgressBar";
-			path = StreamingProgressBar;
+			name = "Example for ScrubbingProgressBar";
+			path = ScrubbingProgressBar;
 			sourceTree = "<group>";
 		};
 		607FACD31AFB9204008FA782 /* Supporting Files */ = {
@@ -123,7 +123,7 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				E53202F0F33A60C782A9CBAE /* StreamingProgressBar.podspec */,
+				E53202F0F33A60C782A9CBAE /* ScrubbingProgressBar.podspec */,
 				9F331C8E75C5EFB57CB23DE4 /* README.md */,
 				8DCC89EBFE9BB942638FE10C /* LICENSE */,
 			);
@@ -133,12 +133,12 @@
 		8363C6934A65B434ADD37632 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C3A7BC3DF1308304CC86A905 /* Pods-StreamingProgressBar_Example.debug.xcconfig */,
-				DE8C731D8C69B7E02F6D8422 /* Pods-StreamingProgressBar_Example.release.xcconfig */,
-				8D08FF2B3459A248219F239C /* Pods-StreamingProgressBar_Tests.debug.xcconfig */,
-				A2DB65521A8AEB728B29506D /* Pods-StreamingProgressBar_Tests.release.xcconfig */,
-				5A4EE08D4920CDFC26569336 /* Pods-StreamingProgressBar_Example-StreamingProgressBar_Tests.debug.xcconfig */,
-				032B6C2810EE817F4B985F4C /* Pods-StreamingProgressBar_Example-StreamingProgressBar_Tests.release.xcconfig */,
+				C3A7BC3DF1308304CC86A905 /* Pods-ScrubbingProgressBar_Example.debug.xcconfig */,
+				DE8C731D8C69B7E02F6D8422 /* Pods-ScrubbingProgressBar_Example.release.xcconfig */,
+				8D08FF2B3459A248219F239C /* Pods-ScrubbingProgressBar_Tests.debug.xcconfig */,
+				A2DB65521A8AEB728B29506D /* Pods-ScrubbingProgressBar_Tests.release.xcconfig */,
+				5A4EE08D4920CDFC26569336 /* Pods-ScrubbingProgressBar_Example-ScrubbingProgressBar_Tests.debug.xcconfig */,
+				032B6C2810EE817F4B985F4C /* Pods-ScrubbingProgressBar_Example-ScrubbingProgressBar_Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -146,9 +146,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		607FACCF1AFB9204008FA782 /* StreamingProgressBar_Example */ = {
+		607FACCF1AFB9204008FA782 /* ScrubbingProgressBar_Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "StreamingProgressBar_Example" */;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "ScrubbingProgressBar_Example" */;
 			buildPhases = (
 				638304C1683FFF0543E99AB1 /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
@@ -160,9 +160,9 @@
 			);
 			dependencies = (
 			);
-			name = StreamingProgressBar_Example;
-			productName = StreamingProgressBar;
-			productReference = 607FACD01AFB9204008FA782 /* StreamingProgressBar_Example.app */;
+			name = ScrubbingProgressBar_Example;
+			productName = ScrubbingProgressBar;
+			productReference = 607FACD01AFB9204008FA782 /* ScrubbingProgressBar_Example.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -182,7 +182,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "StreamingProgressBar" */;
+			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "ScrubbingProgressBar" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -195,7 +195,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				607FACCF1AFB9204008FA782 /* StreamingProgressBar_Example */,
+				607FACCF1AFB9204008FA782 /* ScrubbingProgressBar_Example */,
 			);
 		};
 /* End PBXProject section */
@@ -225,7 +225,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-StreamingProgressBar_Example-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-ScrubbingProgressBar_Example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -238,16 +238,16 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-StreamingProgressBar_Example/Pods-StreamingProgressBar_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/StreamingProgressBar/StreamingProgressBar.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-ScrubbingProgressBar_Example/Pods-ScrubbingProgressBar_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ScrubbingProgressBar/ScrubbingProgressBar.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StreamingProgressBar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ScrubbingProgressBar.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StreamingProgressBar_Example/Pods-StreamingProgressBar_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ScrubbingProgressBar_Example/Pods-ScrubbingProgressBar_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -373,12 +373,12 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C3A7BC3DF1308304CC86A905 /* Pods-StreamingProgressBar_Example.debug.xcconfig */;
+			baseConfigurationReference = C3A7BC3DF1308304CC86A905 /* Pods-ScrubbingProgressBar_Example.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8VNN3M6MR6;
-				INFOPLIST_FILE = StreamingProgressBar/Info.plist;
+				INFOPLIST_FILE = ScrubbingProgressBar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -390,12 +390,12 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE8C731D8C69B7E02F6D8422 /* Pods-StreamingProgressBar_Example.release.xcconfig */;
+			baseConfigurationReference = DE8C731D8C69B7E02F6D8422 /* Pods-ScrubbingProgressBar_Example.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8VNN3M6MR6;
-				INFOPLIST_FILE = StreamingProgressBar/Info.plist;
+				INFOPLIST_FILE = ScrubbingProgressBar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -408,7 +408,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "StreamingProgressBar" */ = {
+		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "ScrubbingProgressBar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACED1AFB9204008FA782 /* Debug */,
@@ -417,7 +417,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "StreamingProgressBar_Example" */ = {
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "ScrubbingProgressBar_Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,

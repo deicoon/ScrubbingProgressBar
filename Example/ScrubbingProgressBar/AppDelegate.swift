@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  StreamingProgressBar
+//  ScrubbingProgressBar
 //
 //  Created by Kyle Zaragoza on 08/23/2016.
 //  Copyright (c) 2016 Kyle Zaragoza. All rights reserved.
