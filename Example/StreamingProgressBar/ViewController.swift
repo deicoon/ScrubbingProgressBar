@@ -12,8 +12,13 @@ import StreamingProgressBar
 class ViewController: UIViewController {
 
     @IBOutlet weak var progressBar: StreamingProgressBar!
+    @IBOutlet weak var resetButton: UIButton!
     var playTimer: Timer?
     var bufferTimer: Timer?
+    
+    @IBAction func resetClicked(_ sender: UIButton) {
+        progressBar.progress = 0.5
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,13 +29,13 @@ class ViewController: UIViewController {
             target: self,
             selector: #selector(incrementPlayTimer),
             userInfo: nil,
-            repeats: true)
+            repeats: true)*/
         bufferTimer = Timer.scheduledTimer(
             timeInterval: 0.5,
             target: self,
             selector: #selector(incrementBufferProgress),
             userInfo: nil,
-            repeats: true)*/
+            repeats: true)
     }
     
     func incrementPlayTimer() {

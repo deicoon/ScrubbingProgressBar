@@ -11,7 +11,8 @@
 import UIKit
 
 @objc public protocol StreamingProgressBarDelegate {
-    @objc optional func streamingBar(bar: StreamingProgressBar, didScrubToProgress: CGFloat)
+    @objc optional func streamingBar(_ bar: StreamingProgressBar, didScrubToProgress: CGFloat)
+    @objc optional func streamingBar(_ bar: StreamingProgressBar, didChangeScrubbingSpeed: CGFloat)
 }
 
 @IBDesignable open class StreamingProgressBar: UIControl {
@@ -33,11 +34,7 @@ import UIKit
     
     @IBInspectable open var secondaryProgress: CGFloat = 0 {
         didSet {
-            if secondaryProgress > 1 {
-                secondaryProgress = 1
-            } else if secondaryProgress < 0 {
-                secondaryProgress = 0
-            }
+            secondaryProgress = secondaryProgress.clamped(to: minimumValue...maximumValue)
             layout(secondaryProgressBarLayer, forProgress: secondaryProgress)
         }
     }
@@ -49,17 +46,20 @@ import UIKit
             CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: .easeInEaseOut))
         }
         didSet {
-            progress = progress.clamped(to: 0...1)
+            progress = progress.clamped(to: minimumValue...maximumValue)
             layout(progressBarLayer, forProgress: progress)
             CATransaction.commit()
         }
     }
     
+    @IBInspectable open var minimumValue: CGFloat = 0
+    @IBInspectable open var maximumValue: CGFloat = 1
+    
     @IBInspectable open var draggerRadius: CGFloat = 10 {
         didSet {
             let path = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: draggerRadius, height: draggerRadius))
             draggerLayer.path = path.cgPath
-            layoutDragger()
+            layoutDragger(forProgress: progress)
         }
     }
     
@@ -81,7 +81,7 @@ import UIKit
     fileprivate var isDragging: Bool = false
     fileprivate var firstTouchPoint: CGPoint = .zero
     fileprivate var previousY: CGFloat = 0
-    fileprivate var firstTouchProgress: CGFloat = 0
+    fileprivate var realPositionValue: CGFloat = 0
     
     fileprivate let progressBarLayer: CALayer = {
         let layer = CALayer()
@@ -112,6 +112,8 @@ import UIKit
     }
     
     fileprivate func layout(_ layer: CALayer, forProgress progress: CGFloat) {
+        let progress = progress.unitScaled(from: minimumValue...maximumValue)
+        
         let layerFrame = CGRect(
             origin: CGPoint.zero,
             size: CGSize(width: self.bounds.width * progress, height: self.bounds.height))
@@ -119,11 +121,11 @@ import UIKit
         animateLayer(layer, toFrame: layerFrame)
         
         if (layer == progressBarLayer) {
-            layoutDragger()
+            layoutDragger(forProgress: progress)
         }
     }
     
-    fileprivate func layoutDragger() {
+    fileprivate func layoutDragger(forProgress progress: CGFloat) {
         let layerFrame = CGRect(
             origin: CGPoint(x: (self.bounds.width * progress - draggerRadius/2),
                             y: (self.bounds.height - draggerRadius)/2),
@@ -176,7 +178,7 @@ import UIKit
     }
     
     func progressFromPosition(position: CGFloat) -> CGFloat {
-        return (position / CGFloat(bounds.width)).clamped(to: 0...1)
+        return (position / CGFloat(bounds.width))
     }
     
     func pointIsInDragger(_ pointInView: CGPoint) -> Bool {
@@ -220,7 +222,7 @@ import UIKit
         if touchIsInDragger(object: self, touch: touch, touchPoint: &posPt) {
             isDragging = true
             firstTouchPoint = posPt
-            firstTouchProgress = progress
+            realPositionValue = progress
             return true
         }
         return super.beginTracking(touch, with: event)
@@ -239,37 +241,36 @@ import UIKit
     
     open override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         if scrubbingEnabled == true, isDragging == true {
-            let pointInView = touch.location(in: self)
+            let previousLocation = touch.previousLocation(in: self)
+            let currentLocation = touch.location(in: self)
+            let trackingOffset = currentLocation.x - previousLocation.x
             
-            let oldSpeed = scrubbingSpeed
-            let verticalDelta = abs(abs(pointInView.y) - bounds.midY)
-            scrubbingSpeed = scrubbingSpeedAtDelta(verticalDelta)
+            // Find the scrubbing speed that corresponds to the touch's vertical offset.
+            let verticalOffset = abs(abs(currentLocation.y) - firstTouchPoint.y)
             
-            var computedProgress = firstTouchProgress
-            let firstSpeedChangeLocation = scrubbingPositions[scrubbingPositions.count - 2]
-            
-            if (verticalDelta >= firstSpeedChangeLocation && abs(pointInView.y) < abs(previousY)) {
-                let horizDelta = pointInView.x - positionFromProgress(progress: self.progress)
-                let xCompensation = (previousY - pointInView.y) * horizDelta / (verticalDelta)
-                let thumbAdjustment = (progressFromPosition(position: pointInView.x) - self.progress) / (1 + abs(pointInView.y - firstTouchPoint.y))
-                
-                let adjustment = pow((firstSpeedChangeLocation / (verticalDelta)), 2.0)
-                let _verticalChangeAdjustment = (progressFromPosition(position: pointInView.x) - computedProgress) * adjustment
-                
-                computedProgress += _verticalChangeAdjustment
-            } else {
-                if abs(oldSpeed - scrubbingSpeed) > 0.001 {
-                    firstTouchProgress = self.progress
-                    firstTouchPoint = pointInView
-                }
-                
-                let relativeProgress = (pointInView.x - firstTouchPoint.x) / (bounds.width - thumbRect.width)
-                computedProgress += relativeProgress * scrubbingSpeed
+            let newScrubbingSpeed = scrubbingSpeedAtDelta(verticalOffset)
+            if (newScrubbingSpeed != scrubbingSpeed) {
+                delegate?.streamingBar?(self, didChangeScrubbingSpeed: newScrubbingSpeed)
             }
-            previousY = pointInView.y
+            scrubbingSpeed = newScrubbingSpeed
             
-            self.progress = computedProgress
-            delegate?.streamingBar?(bar: self, didScrubToProgress: self.progress)
+            let trackRect = self.bounds
+            realPositionValue += (maximumValue - minimumValue) * (trackingOffset / trackRect.size.width)
+            
+            let valueAdjustment = scrubbingSpeed * (maximumValue - minimumValue) * (trackingOffset / trackRect.size.width)
+            var thumbAdjustment: CGFloat = 0
+            if (((firstTouchPoint.y < currentLocation.y) && (currentLocation.y < previousLocation.y)) ||
+                ((firstTouchPoint.y > currentLocation.y) && (currentLocation.y > previousLocation.y))) {
+                // We are getting closer to the slider, go closer to the real location.
+                thumbAdjustment = (realPositionValue - progress) / (1.0 + abs(currentLocation.y - firstTouchPoint.y))
+            }
+            progress += valueAdjustment + thumbAdjustment
+            print(thumbAdjustment)
+            /*if isContinuous {
+                sendActions(for: .valueChanged)
+            }*/
+            
+            delegate?.streamingBar?(self, didScrubToProgress: self.progress)
             
             return true
         }
@@ -285,5 +286,18 @@ import UIKit
 extension Comparable {
     func clamped(to limits: ClosedRange<Self>) -> Self {
         return min(max(self, limits.lowerBound), limits.upperBound)
+    }
+}
+
+extension CGFloat {
+    func scaled(from start: ClosedRange<CGFloat>, to target: ClosedRange<CGFloat>) -> CGFloat {
+        let clamped = self.clamped(to: start)
+        return (clamped - start.lowerBound) * (target.upperBound - target.lowerBound) / (start.upperBound - start.lowerBound) // Thales
+    }
+    func unitScaled(from limits: ClosedRange<CGFloat>) -> CGFloat {
+        return self.scaled(from: limits, to: 0...1)
+    }
+    func unitScaled(to limits: ClosedRange<CGFloat>) -> CGFloat {
+        return self.scaled(from: 0...1, to: limits)
     }
 }
