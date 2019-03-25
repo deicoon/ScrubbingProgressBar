@@ -5,6 +5,7 @@
 //  Portions Copyright © 2015 Kyle Zaragoza. All rights reserved.
 //  Portions from the `ScrubberBar` library, Copyright © 2015 Squareheads. MIT licensed.
 //  Portions from the `JGDetailScrubber` library, Copyright © 2013 Jonas Gessner. All rights reserved.
+//  Portions from the `OBSlider(-swift)` library, Copyright © 2011 Ole Begemann, Copyright © 2014 Nicolas Gomollon All rights reserved.
 //  Portions Copyright © 2019 Perceval Faramaz.
 //
 
@@ -13,6 +14,9 @@ import UIKit
 @objc public protocol StreamingProgressBarDelegate {
     @objc optional func streamingBar(_ bar: StreamingProgressBar, didScrubToProgress: CGFloat)
     @objc optional func streamingBar(_ bar: StreamingProgressBar, didChangeScrubbingSpeed: CGFloat)
+    
+    @objc optional func streamingBarDidBeginScrubbing(_ bar: StreamingProgressBar)
+    @objc optional func streamingBarDidEndScrubbing(_ bar: StreamingProgressBar)
 }
 
 @IBDesignable open class StreamingProgressBar: UIControl {
@@ -54,6 +58,7 @@ import UIKit
     
     @IBInspectable open var minimumValue: CGFloat = 0
     @IBInspectable open var maximumValue: CGFloat = 1
+    @IBInspectable open var isContinuous: Bool = true
     
     @IBInspectable open var draggerRadius: CGFloat = 10 {
         didSet {
@@ -223,6 +228,9 @@ import UIKit
             isDragging = true
             firstTouchPoint = posPt
             realPositionValue = progress
+            
+            delegate?.streamingBarDidBeginScrubbing?(self)
+            delegate?.streamingBar?(self, didChangeScrubbingSpeed: scrubbingSpeed)
             return true
         }
         return super.beginTracking(touch, with: event)
@@ -241,9 +249,16 @@ import UIKit
     
     open override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         if scrubbingEnabled == true, isDragging == true {
+            let trackRect = self.bounds
+            
             let previousLocation = touch.previousLocation(in: self)
             let currentLocation = touch.location(in: self)
             let trackingOffset = currentLocation.x - previousLocation.x
+            
+            guard detailScrubbingEnabled else {
+                progress += (maximumValue - minimumValue) * (trackingOffset / trackRect.size.width)
+                return super.continueTracking(touch, with: event)
+            }
             
             // Find the scrubbing speed that corresponds to the touch's vertical offset.
             let verticalOffset = abs(abs(currentLocation.y) - firstTouchPoint.y)
@@ -254,7 +269,6 @@ import UIKit
             }
             scrubbingSpeed = newScrubbingSpeed
             
-            let trackRect = self.bounds
             realPositionValue += (maximumValue - minimumValue) * (trackingOffset / trackRect.size.width)
             
             let valueAdjustment = scrubbingSpeed * (maximumValue - minimumValue) * (trackingOffset / trackRect.size.width)
@@ -265,10 +279,10 @@ import UIKit
                 thumbAdjustment = (realPositionValue - progress) / (1.0 + abs(currentLocation.y - firstTouchPoint.y))
             }
             progress += valueAdjustment + thumbAdjustment
-            print(thumbAdjustment)
-            /*if isContinuous {
+            
+            if isContinuous {
                 sendActions(for: .valueChanged)
-            }*/
+            }
             
             delegate?.streamingBar?(self, didScrubToProgress: self.progress)
             
@@ -279,6 +293,8 @@ import UIKit
     
     open override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
         isDragging = false
+        sendActions(for: .valueChanged)
+        delegate?.streamingBarDidEndScrubbing?(self)
         super.endTracking(touch, with: event)
     }
 }

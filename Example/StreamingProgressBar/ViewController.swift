@@ -48,7 +48,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func incrementBufferProgress() {
+    @objc func incrementBufferProgress() {
         progressBar.secondaryProgress += 0.1
     }
 }
